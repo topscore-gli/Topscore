@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1e1e2f"><title>TopScore | Loading course</title>
+<style> :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#1e1e2f;color:#f0f0ff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;display:grid;place-items:center;padding:24px}main{width:min(100%,420px);text-align:center;padding:28px;border-radius:22px;background:#2a2a3f;box-shadow:10px 10px 20px #171723,-10px -10px 20px #25253b}.spin{width:38px;height:38px;border:3px solid #444;border-top-color:#1db954;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 18px}@keyframes spin{to{transform:rotate(360deg)}}p{color:#c0c0e0;line-height:1.6;font-size:14px}a,button{display:inline-block;border:0;border-radius:12px;padding:12px 18px;background:#1db954;color:#071b0e;font-weight:700;text-decoration:none;cursor:pointer}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}</style></head>
+<body><main><div class="spin" id="spinner"></div><h2 id="heading">Opening your lesson…</h2><p id="message">TopScore is securely checking access to this course.</p><div class="actions" id="actions"></div></main>
+<script>
+(async()=>{
+ const coursePath="courses/biology/bio13.html";
+ const base='../../';
+ const heading=document.getElementById('heading'),message=document.getElementById('message'),spinner=document.getElementById('spinner'),actions=document.getElementById('actions');
+ function fail(title,body,links){heading.textContent=title;message.textContent=body;spinner.style.display='none';actions.innerHTML='';for(const item of links){const a=document.createElement('a');a.href=item.href;a.textContent=item.label;actions.appendChild(a);}}
+ try{
+  await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=base+'topscore-core.js';s.onload=resolve;s.onerror=()=>reject(new Error('Could not load TopScore services.'));document.head.appendChild(s);});
+  const result=await window.TopScore.call('getCoursePage',{path:coursePath});
+  if(!result||typeof result.html!=='string'||!result.html.includes('<html'))throw new Error('The course content could not be loaded.');
+  document.open();document.write(result.html);document.close();
+ }catch(error){
+  const code=String(error&&error.code||'');
+  if(code.includes('unauthenticated')){fail('Sign in to continue','This lesson requires an active TopScore account.',['placeholder'].map(()=>({href:base+'auth.html?mode=login',label:'Sign in / Create account'})));}
+  else if(code.includes('permission-denied')){fail('Premium access required','Subscribe to TopScore to unlock this lesson.',['placeholder'].map(()=>({href:base+'account.html?pay=1',label:'View subscription'})));}
+  else{console.error(error);fail('Unable to open this lesson',error.message||'Please check your connection and try again.',[{href:'javascript:location.reload()',label:'Retry'},{href:base+'courses.html',label:'Back to courses'}]);}
+ }
+})();
+</script></body></html>
