@@ -1,0 +1,10 @@
+# Private server-side exam answer bank (never publish with GitHub Pages)
+TopScore-Question-Bank-Private.json
+*question-bank-private*.json
+
+# Local credentials and environment files
+.env
+.env.*
+serviceAccount*.json
+firebase-debug.log
+ui-debug.log

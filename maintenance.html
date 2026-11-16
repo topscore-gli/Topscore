@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance • Back Soon...</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+
+        :root {
+            --bg: #e0e5ec;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Inter', system-ui, sans-serif;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 620px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .image-wrapper {
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 40px;
+            background: var(--bg);
+            border-radius: 50%;
+            box-shadow: 
+                25px 25px 50px #bec3c9,
+                -25px -25px 50px #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1200px;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .image-inner {
+            width: 260px;
+            height: 260px;
+            background: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                inset 12px 12px 24px #bec3c9,
+                inset -12px -12px 24px #ffffff;
+            transition: transform 0.2s ease-out;
+            will-change: transform;
+        }
+
+        .icon {
+            font-size: 160px;
+            line-height: 1;
+            filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.15));
+            transition: transform 0.3s ease;
+        }
+
+        .title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: 1.35rem;
+            color: #54606e;
+            margin-bottom: 50px;
+            line-height: 1.4;
+        }
+
+        .subtitle strong {
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        .form-card {
+            background: var(--bg);
+            border-radius: 32px;
+            padding: 48px 40px 40px;
+            box-shadow: 
+                20px 20px 40px #bec3c9,
+                -20px -20px 40px #ffffff;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            color: #2c3e50;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #54606e;
+        }
+
+        .neu-input {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 1.05rem;
+            background: var(--bg);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 
+                inset 8px 8px 16px #bec3c9,
+                inset -8px -8px 16px #ffffff;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .neu-input:focus {
+            box-shadow: 
+                inset 4px 4px 8px #bec3c9,
+                inset -4px -4px 8px #ffffff;
+        }
+
+        .neu-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: var(--bg);
+            color: #2c3e50;
+            border: none;
+            border-radius: 9999px;
+            box-shadow: 
+                10px 10px 20px #bec3c9,
+                -10px -10px 20px #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+        }
+
+        .neu-btn:hover {
+            box-shadow: 
+                6px 6px 12px #bec3c9,
+                -6px -6px 12px #ffffff;
+        }
+
+        .neu-btn:active {
+            box-shadow: 
+                inset 8px 8px 16px #bec3c9,
+                inset -8px -8px 16px #ffffff;
+            transform: scale(0.98);
+        }
+
+        #success {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 20px;
+            box-shadow: 
+                10px 10px 20px #bec3c9,
+                -10px -10px 20px #ffffff;
+            font-weight: 500;
+        }
+
+        .footer-note {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #8a94a3;
+        }
+
+        @media (max-width: 480px) {
+            .image-wrapper { width: 260px; height: 260px; }
+            .image-inner { width: 210px; height: 210px; }
+            .icon { font-size: 130px; }
+            .title { font-size: 2.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="image-wrapper" class="image-wrapper">
+            <div id="image-inner" class="image-inner">
+                <div class="icon">🚧</div>
+            </div>
+        </div>
+
+        <h1 class="title">This site is under maintenance</h1>
+        <p class="subtitle">
+            and will be back online on <strong>1st April 2026</strong>
+        </p>
+
+        <div class="form-card">
+            <h2 class="form-title">Get notified when we're live</h2>
+            
+            <form id="subscribe-form">
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="neu-input" placeholder="you@example.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="neu-input" placeholder="+234 901 234 5678" required>
+                </div>
+
+                <button type="submit" class="neu-btn">Notify Me</button>
+            </form>
+
+            <div id="success">
+                ✅ Thank you! We'll send you an update when the site is back live.
+            </div>
+        </div>
+
+        <p class="footer-note">
+            Built by ❤️ © ⭐ Top Score ⭐ for 100% JAMB SUCCESS.
+        </p>
+    </div>
+
+    <!-- Firebase SDK – Realtime Database only -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+
+    <script>
+        // ============== 3D TILT EFFECT ==============
+        const wrapper = document.getElementById('image-wrapper');
+        const inner = document.getElementById('image-inner');
+
+        wrapper.addEventListener('mousemove', (e) => {
+            const rect = wrapper.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+
+            const rotateX = (y - 0.5) * -30;
+            const rotateY = (x - 0.5) * 30;
+
+            inner.style.transform = `rotateX(\( {rotateX}deg) rotateY( \){rotateY}deg) scale(1.05)`;
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            inner.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+        });
+
+        // ============== FORM + FIREBASE REALTIME DATABASE ==============
+        const form = document.getElementById('subscribe-form');
+        const successDiv = document.getElementById('success');
+
+        // Your Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyA3WD52stfzLzO5895D4HsspaV5tKcCt7o",
+            authDomain: "jamb-b6a95.firebaseapp.com",
+            databaseURL: "https://jamb-b6a95-default-rtdb.firebaseio.com",
+            projectId: "jamb-b6a95",
+            storageBucket: "jamb-b6a95.firebasestorage.app",
+            messagingSenderId: "794234514415",
+            appId: "1:794234514415:web:4d1e36ff7f392f8e39241a",
+            measurementId: "G-ZP65BGBGHB"
+        };
+
+        let database = null;
+
+        // Initialize Firebase
+        try {
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            console.log('%c✅ Connected to Firebase Realtime Database', 'color:#2ecc71; font-weight:bold');
+        } catch (err) {
+            console.error("Firebase initialization failed:", err);
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const phone  = document.getElementById('phone').value.trim();
+
+            if (!email || !phone) {
+                alert("Please fill in both email and phone number");
+                return;
+            }
+
+            const btn = form.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = "Saving...";
+            btn.disabled = true;
+
+            try {
+                if (database) {
+                    await database.ref("maintenance_subscribers").push({
+                        email: email,
+                        phone: phone,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP,
+                        notified: false
+                    });
+                    console.log("Subscriber saved successfully");
+                } else {
+                    console.log("Demo mode (no database connection):", { email, phone });
+                }
+
+                successDiv.style.display = 'block';
+                form.reset();
+
+                setTimeout(() => {
+                    successDiv.style.display = 'none';
+                }, 6000);
+
+            } catch (error) {
+                console.error("Error saving to database:", error);
+                alert("Sorry, something went wrong. Please try again.");
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // Submit on Enter in phone field
+        document.getElementById('phone').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                form.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // ESC = reset form
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") {
+                form.reset();
+                successDiv.style.display = 'none';
+            }
+        });
+
+        console.log('%c🚧 Maintenance page ready • Now saving to Firebase Realtime Database', 'color:#3498db; font-size:13px');
+    </script>
+</body>
+</html>

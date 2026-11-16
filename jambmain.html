@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JAMB MOCK 2026 - TopScore</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    :root {
+      --background: #1e1e2f;
+      --surface: #242438;
+      --shadow-in: #171723;
+      --shadow-out: #2a2a40;
+      --text: #ffffff;
+      --text-muted: #c4c4d6;
+      --accent: #1db954;
+      --accent-orange: #ff9500;
+      --accent-purple: #8e7dff;
+      --accent-red: #ff4444;
+      --accent-blue: #4a90e2;
+      --radius: 18px;
+    }
+
+    body.light {
+      --background: #e0e0e0;
+      --surface: #ececec;
+      --shadow-in: #bebebe;
+      --shadow-out: #ffffff;
+      --text: #2f2f2f;
+      --text-muted: #666666;
+      --accent: #1db954;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 420px;
+      height: 780px;
+      background: var(--background);
+      border-radius: 28px;
+      box-shadow: 12px 12px 24px var(--shadow-in), -12px -12px 24px var(--shadow-out);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .app-scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding-top: 78px;
+      padding-bottom: 92px;
+      scrollbar-width: none;
+    }
+
+    .app-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .neumorphic {
+      background: var(--background);
+      box-shadow: 6px 6px 12px var(--shadow-in), -6px -6px 12px var(--shadow-out);
+      border-radius: var(--radius);
+    }
+
+    .neumorphic-pressed {
+      background: var(--background);
+      box-shadow: inset 4px 4px 8px var(--shadow-in), inset -4px -4px 8px var(--shadow-out);
+      border-radius: var(--radius);
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: var(--background);
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .icon-btn:active {
+      transform: scale(0.96);
+      box-shadow: inset 4px 4px 8px var(--shadow-in), inset -4px -4px 8px var(--shadow-out);
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 16px;
+      background: var(--background);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .top-bar .header {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .top-bar .right-icons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .page-content {
+      padding: 16px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, rgba(255,149,0,0.15), rgba(255,149,0,0.05));
+      border: 1px solid rgba(255,149,0,0.3);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,149,0,0.2), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--accent-orange), #ffb700);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 25px rgba(255,149,0,0.5);
+      position: relative;
+      z-index: 1;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .hero-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-orange);
+    }
+
+    .hero-stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Countdown Section */
+    .countdown-section {
+      background: linear-gradient(135deg, rgba(255,68,68,0.1), rgba(255,68,68,0.05));
+      border: 1px solid rgba(255,68,68,0.2);
+      border-radius: 24px;
+      padding: 20px;
+      margin-bottom: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .countdown-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,68,68,0.1), transparent 70%);
+      border-radius: 50%;
+    }
+
+    .countdown-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-red);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .countdown-display {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .countdown-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+    }
+
+    .countdown-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .countdown-unit {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .countdown-separator {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-muted);
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    .exam-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Time Remaining Bar */
+    .time-remaining-section {
+      margin-bottom: 24px;
+    }
+
+    .time-remaining-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .time-remaining-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .time-remaining-percent {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-red);
+    }
+
+    .progress-bar-container {
+      height: 10px;
+      background: var(--background);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-red), #ff6b6b);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+      box-shadow: 0 0 10px rgba(255,68,68,0.3);
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 20px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+      border-radius: 0 10px 10px 0;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Exam Schedule Cards */
+    .exam-schedule {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .exam-card {
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .exam-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(29,185,84,0.2), 6px 6px 12px var(--shadow-in), -6px -6px 12px var(--shadow-out);
+    }
+
+    .exam-card.ended {
+      opacity: 0.7;
+    }
+
+    .exam-card.upcoming {
+      border-color: var(--accent-blue);
+    }
+
+    .exam-time-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .exam-time-badge.live {
+      background: rgba(29,185,84,0.2);
+      color: var(--accent);
+      animation: pulse-live 2s infinite;
+    }
+
+    .exam-time-badge.ended {
+      background: rgba(255,68,68,0.2);
+      color: var(--accent-red);
+    }
+
+    .exam-time-badge.upcoming {
+      background: rgba(74,144,226,0.2);
+      color: var(--accent-blue);
+    }
+
+    @keyframes pulse-live {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(29,185,84,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(29,185,84,0); }
+    }
+
+    .exam-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .exam-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: var(--background);
+      box-shadow: 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
+    }
+
+    .exam-info h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .exam-time {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .exam-duration {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255,255,255,0.1);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-top: 8px;
+      color: var(--text-muted);
+    }
+
+    .access-btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .access-btn.available {
+      background: linear-gradient(135deg, var(--accent), #17a846);
+      color: white;
+      box-shadow: 0 4px 15px rgba(29,185,84,0.4);
+    }
+
+    .access-btn.available:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(29,185,84,0.5);
+    }
+
+    .access-btn.ended {
+      background: var(--background);
+      color: var(--text-muted);
+      box-shadow: inset 3px 3px 6px var(--shadow-in), inset -3px -3px 6px var(--shadow-out);
+      cursor: not-allowed;
+    }
+
+    .access-btn.upcoming {
+      background: linear-gradient(135deg, var(--accent-blue), #357abd);
+      color: white;
+      box-shadow: 0 4px 15px rgba(74,144,226,0.4);
+    }
+
+    .access-btn.upcoming:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(74,144,226,0.5);
+    }
+
+    /* Chat Admin Section */
+    .chat-section {
+      background: linear-gradient(135deg, rgba(29,185,84,0.1), rgba(29,185,84,0.05));
+      border: 1px solid rgba(29,185,84,0.2);
+      border-radius: 24px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .chat-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .chat-icon-wrap {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #17a846);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(29,185,84,0.4);
+    }
+
+    .chat-text h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .chat-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .chat-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      background: var(--background);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 6px 6px 12px var(--shadow-in), -6px -6px 12px var(--shadow-out);
+    }
+
+    /* Info Cards */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .info-card {
+      padding: 16px;
+      text-align: center;
+    }
+
+    .info-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .info-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent-orange);
+      margin-bottom: 4px;
+    }
+
+    .info-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px 14px 14px;
+      background: var(--background);
+      display: flex;
+      justify-content: space-around;
+      align-items: end;
+      box-shadow: 0 -6px 14px rgba(0,0,0,0.12);
+      z-index: 20;
+    }
+
+    .nav-item {
+      text-align: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item .icon-btn {
+      margin: 0 auto 4px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item p {
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-item.active {
+      color: var(--text);
+    }
+
+    .nav-item.active .icon-btn {
+      color: var(--accent);
+    }
+
+    .nav-item.active p {
+      opacity: 1;
+    }
+
+    .nav-item.center .icon-btn {
+      width: 52px;
+      height: 52px;
+      font-size: 24px;
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 18px rgba(255,149,0,0.45), 4px 4px 8px var(--shadow-in), -4px -4px 8px var(--shadow-out);
+    }
+
+    /* Modal/Toast Notification */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 28px;
+      max-width: 320px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 16px;
+    }
+
+    .modal-icon.error {
+      background: rgba(255,68,68,0.2);
+    }
+
+    .modal-icon.info {
+      background: rgba(74,144,226,0.2);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal-message {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .modal-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s ease;
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(29,185,84,0.4);
+    }
+
+    @media (max-width: 420px) {
+      body {
+        padding: 0;
+      }
+
+      .app-shell {
+        max-width: 100%;
+        height: 100vh;
+        border-radius: 0;
+      }
+    }
+  </style>
+<script src="./topscore-gate.js"></script></head>
+<body class="dark">
+  <div class="app-shell">
+    <header class="top-bar">
+      <button class="icon-btn" onclick="history.back()">←</button>
+      <div class="header">JAMB Mock</div>
+      <div class="right-icons">
+        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+        <button class="icon-btn" aria-label="Rocket">🚀</button>
+      </div>
+    </header>
+
+    <main class="app-scroll">
+      <div class="page-content">
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+          <div class="hero-icon">📝</div>
+          <h1 class="hero-title">2026 JAMB MOCK</h1>
+          <p class="hero-subtitle">"Likely JAMB Questions for the 2026 JAMB Examination"</p>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-value">500+</span>
+              <span class="hero-stat-label">Questions</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">3</span>
+              <span class="hero-stat-label">Sessions</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">92%</span>
+              <span class="hero-stat-label">Accuracy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Countdown to Real JAMB -->
+        <div class="countdown-section">
+          <div class="countdown-label">
+            <span class="pulse-dot" style="display:inline-block;width:8px;height:8px;background:var(--accent-red);border-radius:50%;animation:pulse-live 2s infinite;"></span>
+            <span>Time Until 2026 JAMB UTME</span>
+          </div>
+          <div class="countdown-display" id="countdown-display">
+            <div class="countdown-item">
+              <span class="countdown-value" id="days">--</span>
+              <span class="countdown-unit">Days</span>
+            </div>
+            <span class="countdown-separator">:</span>
+            <div class="countdown-item">
+              <span class="countdown-value" id="hours">--</span>
+              <span class="countdown-unit">Hours</span>
+            </div>
+            <span class="countdown-separator">:</span>
+            <div class="countdown-item">
+              <span class="countdown-value" id="minutes">--</span>
+              <span class="countdown-unit">Minutes</span>
+            </div>
+          </div>
+          <div class="exam-date">Exam starts April 16, 2026</div>
+        </div>
+
+        <!-- Time Remaining Progress Bar -->
+        <div class="time-remaining-section">
+          <div class="time-remaining-header">
+            <span class="time-remaining-label">
+              <span>⏰</span>
+              <span>Time Remaining</span>
+            </span>
+            <span class="time-remaining-percent" id="time-remaining-percent">--%</span>
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-fill" id="time-progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Today's Mock Exam Schedule -->
+        <h2 class="section-title">
+          <span>📅</span>
+          <span>Today's Mock Schedule</span>
+        </h2>
+
+        <div class="exam-schedule" id="exam-schedule">
+          <!-- Morning Session -->
+          <div class="exam-card neumorphic" id="morning-card" data-start="09:00" data-end="11:00">
+            <span class="exam-time-badge" id="morning-badge">Upcoming</span>
+            <div class="exam-header">
+              <div class="exam-icon">🌅</div>
+              <div class="exam-info">
+                <h3>Morning Mock Exam</h3>
+                <div class="exam-time">
+                  <span>🕘</span>
+                  <span>9:00 AM - 11:00 AM</span>
+                </div>
+                <span class="exam-duration">
+                  <span>⏱️</span>
+                  <span>2 Hours</span>
+                </span>
+              </div>
+            </div>
+            <p>Get Access Code From Admin</p>
+            <button class="access-btn" id="morning-btn" onclick="accessExam('morning')">
+              <span>▶</span>
+              <span>Access Exam</span>
+            </button>
+          </div>
+
+          <!-- Noon Session -->
+          <div class="exam-card neumorphic" id="noon-card" data-start="12:00" data-end="14:00">
+            <span class="exam-time-badge" id="noon-badge">Upcoming</span>
+            <div class="exam-header">
+              <div class="exam-icon">☀️</div>
+              <div class="exam-info">
+                <h3>Noon Mock Exam</h3>
+                <div class="exam-time">
+                  <span>🕚</span>
+                  <span>12:00 PM - 2:00 PM</span>
+                </div>
+                <span class="exam-duration">
+                  <span>⏱️</span>
+                  <span>2 Hours</span>
+                </span>
+              </div>
+            </div>
+            <p>Get Access Code From Admin</p>
+            <button class="access-btn" id="noon-btn" onclick="accessExam('noon')">
+              <span>▶</span>
+              <span>Access Exam</span>
+            </button>
+          </div>
+
+          <!-- Afternoon Session -->
+          <div class="exam-card neumorphic" id="afternoon-card" data-start="15:00" data-end="17:00">
+            <span class="exam-time-badge" id="afternoon-badge">Upcoming</span>
+            <div class="exam-header">
+              <div class="exam-icon">🌇</div>
+              <div class="exam-info">
+                <h3>Afternoon Mock Exam</h3>
+                <div class="exam-time">
+                  <span>🕑</span>
+                  <span>3:00 PM - 5:00 PM</span>
+                </div>
+                <span class="exam-duration">
+                  <span>⏱️</span>
+                  <span>2 Hours</span>
+                </span>
+              </div>
+            </div>
+            <p>Get Access Code From Admin</p>
+            <button class="access-btn" id="afternoon-btn" onclick="accessExam('afternoon')">
+              <span>▶</span>
+              <span>Access Exam</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Info Grid -->
+        <div class="info-grid">
+          <div class="info-card neumorphic">
+            <div class="info-icon">⏳</div>
+            <div class="info-value">2 hrs</div>
+            <div class="info-label">Per Session</div>
+          </div>
+          <div class="info-card neumorphic">
+            <div class="info-icon">📊</div>
+            <div class="info-value">180</div>
+            <div class="info-label">Questions</div>
+          </div>
+        </div>
+
+        <!-- Chat Admin Section -->
+        <div class="chat-section">
+          <div class="chat-info">
+            <div class="chat-icon-wrap">💬</div>
+            <div class="chat-text">
+              <h4>Chat with Admin</h4>
+              <p>Need help? Contact support</p>
+            </div>
+          </div>
+          <a href="chat.html" class="chat-btn">
+            <span>Chat</span>
+            <span>→</span>
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <div class="nav-item">
+        <button class="icon-btn" aria-label="Chat" onclick="window.location.href='chat.html'">💬</button>
+        <p>Chat</p>
+      </div>
+
+      <div class="nav-item center active">
+        <button class="icon-btn" aria-label="Favourite" onclick="window.location.href='dashboard.html'">🌟</button>
+        <p>Favourite</p>
+      </div>
+
+      <div class="nav-item">
+        <button class="icon-btn" aria-label="Library" onclick="window.location.href='library.html'">📚</button>
+        <p>Library</p>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Modal for notifications -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <div class="modal-icon" id="modal-icon">⚠️</div>
+      <h3 class="modal-title" id="modal-title">Notice</h3>
+      <p class="modal-message" id="modal-message">Message here</p>
+      <button class="modal-btn" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+
+  <script>
+    // EXAM DATE: April 16, 2026 (confirmed JAMB UTME date)
+    const EXAM_DATE = new Date('2026-04-16T00:00:00');
+    const START_DATE = new Date('2026-01-26T00:00:00'); // Registration start
+
+    // Exam Configuration with Redirect URLs
+    const EXAM_CONFIG = {
+      morning: { 
+        start: 9 * 60,      // 9:00 AM
+        end: 11 * 60,       // 10:00 AM
+        name: 'Morning', 
+        startTime: '9:00 AM',
+        endTime: '11:00 AM',
+        url: 'jambexam1.html'
+      },
+      noon: { 
+        start: 12 * 60,     // 11:00 AM
+        end: 14 * 60,       // 1:00 PM
+        name: 'Noon', 
+        startTime: '12:00 PM',
+        endTime: '2:00 PM',
+        url: 'jambexam2.html'
+      },
+      afternoon: { 
+        start: 15 * 60,     // 2:00 PM
+        end: 17 * 60,       // 4:00 PM
+        name: 'Afternoon', 
+        startTime: '3:00 PM',
+        endTime: '5:00 PM',
+        url: 'jambexam3.html'
+      }
+    };
+
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    function setTheme(theme) {
+      body.className = theme;
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    setTheme(localStorage.getItem('theme') || 'dark');
+
+    themeToggle.addEventListener('click', () => {
+      const newTheme = body.classList.contains('light') ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    // COUNTDOWN TIMER
+    function updateCountdown() {
+      const now = new Date();
+      const timeRemaining = EXAM_DATE - now;
+      
+      if (timeRemaining <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+
+      document.getElementById('days').textContent = days.toString().padStart(2, '0');
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+
+      updateTimeProgress(timeRemaining);
+    }
+
+    // TIME REMAINING PROGRESS BAR
+    function updateTimeProgress(timeRemaining) {
+      const totalTime = EXAM_DATE - START_DATE;
+      const elapsed = totalTime - timeRemaining;
+      const percentage = Math.min(100, Math.max(0, (elapsed / totalTime) * 100));
+      const remainingPercent = Math.round(100 - percentage);
+
+      document.getElementById('time-progress-fill').style.width = percentage + '%';
+      document.getElementById('time-remaining-percent').textContent = remainingPercent + '% Remaining';
+      
+      const fill = document.getElementById('time-progress-fill');
+      if (remainingPercent <= 10) {
+        fill.style.background = 'linear-gradient(90deg, #ff0000, #ff4444)';
+      } else if (remainingPercent <= 25) {
+        fill.style.background = 'linear-gradient(90deg, #ff9500, #ffb700)';
+      }
+    }
+
+    // Update countdown every minute
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+
+    // EXAM SCHEDULE MANAGEMENT
+    function updateExamStatuses() {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentTime = currentHour * 60 + currentMinute;
+
+      Object.keys(EXAM_CONFIG).forEach(sessionKey => {
+        const session = EXAM_CONFIG[sessionKey];
+        const card = document.getElementById(sessionKey + '-card');
+        const badge = document.getElementById(sessionKey + '-badge');
+        const btn = document.getElementById(sessionKey + '-btn');
+
+        // Reset classes
+        card.classList.remove('active', 'ended', 'upcoming');
+
+        if (currentTime >= session.end) {
+          // Exam ended
+          card.classList.add('ended');
+          badge.textContent = 'Ended';
+          badge.className = 'exam-time-badge ended';
+          btn.className = 'access-btn ended';
+          btn.innerHTML = '<span>✕</span><span>Exam Ended</span>';
+          btn.disabled = true;
+        } else if (currentTime >= session.start && currentTime < session.end) {
+          // Exam live
+          card.classList.add('active');
+          badge.textContent = 'Live Now';
+          badge.className = 'exam-time-badge live';
+          btn.className = 'access-btn available';
+          btn.innerHTML = '<span>▶</span><span>Enter Exam</span>';
+          btn.disabled = false;
+        } else {
+          // Upcoming
+          card.classList.add('upcoming');
+          badge.textContent = 'Upcoming';
+          badge.className = 'exam-time-badge upcoming';
+          btn.className = 'access-btn upcoming';
+          btn.innerHTML = '<span>🔒</span><span>Access Exam</span>';
+          btn.disabled = false;
+        }
+      });
+    }
+
+    // Check exam status every minute
+    updateExamStatuses();
+    setInterval(updateExamStatuses, 60000);
+
+    // ACCESS EXAM WITH TIME VALIDATION AND REDIRECT
+    function accessExam(sessionKey) {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentTime = currentHour * 60 + currentMinute;
+
+      const exam = EXAM_CONFIG[sessionKey];
+
+      if (currentTime >= exam.end) {
+        // Exam has ended
+        showModal(
+          'error',
+          'Exam Ended',
+          `The ${exam.name} Mock Exam ended at ${exam.endTime}. Please try another available session or check back tomorrow.`,
+          '✕'
+        );
+      } else if (currentTime < exam.start) {
+        // Too early
+        const hoursUntil = Math.floor((exam.start - currentTime) / 60);
+        const minutesUntil = (exam.start - currentTime) % 60;
+        let timeString = '';
+        
+        if (hoursUntil > 0) {
+          timeString += hoursUntil + ' hour' + (hoursUntil > 1 ? 's' : '');
+        }
+        if (minutesUntil > 0) {
+          if (hoursUntil > 0) timeString += ' and ';
+          timeString += minutesUntil + ' minute' + (minutesUntil > 1 ? 's' : '');
+        }
+
+        showModal(
+          'info',
+          'You\'re Early',
+          `The ${exam.name} Mock Exam starts in ${timeString}. Please check back at ${exam.startTime}.`,
+          '⏰'
+        );
+      } else {
+        // Access granted - Redirect to specific exam page
+        window.location.href = exam.url;
+      }
+    }
+
+    // MODAL FUNCTIONS
+    function showModal(type, title, message, icon) {
+      const modal = document.getElementById('modal');
+      const modalIcon = document.getElementById('modal-icon');
+      const modalTitle = document.getElementById('modal-title');
+      const modalMessage = document.getElementById('modal-message');
+
+      modalIcon.textContent = icon;
+      modalIcon.className = 'modal-icon ' + type;
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+    }
+
+    // Close modal on overlay click
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Navigation
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', function() {
+        navItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

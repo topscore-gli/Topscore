@@ -1,0 +1,14 @@
+(async function(){
+  const FREE_PAGES=new Set([
+    "Chemistry/C.html","Chemistry/chem1.html","Chemistry/chem10.html","Chemistry/chem10q.html","Chemistry/chem11.html","Chemistry/chem11q.html","Chemistry/chem1q.html","Chemistry/chem12.html",
+    "biology/B.html","biology/bio.html","biology/bio1.html","biology/bio10.html","biology/bio10i.html","biology/bio11.html","biology/bio11i.html","biology/bio12.html","biology/bio12i.html","biology/bio13.html",
+    "english/E.html","english/ES.html","english/En.html","english/eng1.html","english/eng10.html","english/eng10n.html","english/eng11.html",
+    "math/MS.html","math/MS1.html","math/MS2.html","math/MS3.html","math/MS4.html","math/MS5.html",
+    "physics/P.html","physics/phy1.html","physics/phy10.html","physics/phy10q.html","physics/phy11.html","physics/phy11q.html","physics/phy12.html","physics/phy12q.html","physics/phy13.html","physics/phy13q.html","physics/phy14.html","physics/phy14q.html","physics/phy15.html","physics/phy15q.html","physics/phy16.html","physics/phy16q.html","physics/phy1q.html"
+  ]);
+  const rel=location.pathname.split('/courses/')[1]||'';
+  if(FREE_PAGES.has(rel)) return;
+  const css=document.createElement('style');css.textContent="#tsGate{position:fixed;inset:0;z-index:999999;background:#1e1e2f;color:#fff;display:flex;align-items:center;justify-content:center;font-family:system-ui;text-align:center;padding:24px}.tsg{max-width:380px}.tsg .spin{width:40px;height:40px;border:3px solid #333;border-top-color:#1db954;border-radius:50%;animation:tsgspin 1s linear infinite;margin:0 auto 16px}@keyframes tsgspin{to{transform:rotate(360deg)}}";document.head.appendChild(css);
+  const gate=document.createElement('div');gate.id='tsGate';gate.innerHTML='<div class="tsg"><div class="spin"></div><strong>Checking your TopScore access…</strong><p style="opacity:.7;font-size:13px">This is a Premium course page.</p></div>';document.documentElement.appendChild(gate);
+  try{const base=location.pathname.includes('/courses/')?'../../':'./';const s=document.createElement('script');s.src=base+'topscore-core.js';document.head.appendChild(s);await new Promise((r,j)=>{s.onload=r;s.onerror=j});const p=await TopScore.requirePremium();if(p&&TopScore.premiumActive(p)){const file=location.pathname.split('/').pop();if(file==='jambex.html'||file==='jambexam1.html'){const entry=await TopScore.call('getExamEntry',{examId:'jamb-pro-cbt-2026'});if(!entry.joined){location.href=base+'online-exams.html';return;}}gate.remove();return;}setTimeout(()=>{if(document.getElementById('tsGate'))location.href=base+'account.html?pay=1';},100);}catch(e){console.error(e);gate.innerHTML='<div class="tsg"><strong>Connection problem</strong><p style="opacity:.7;font-size:13px">Please check your internet connection.</p><button onclick="location.reload()" style="padding:12px 18px;border:0;border-radius:10px;background:#1db954;color:#fff;font-weight:700">Retry</button></div>';}
+})();

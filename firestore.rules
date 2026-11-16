@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create, update, delete: if false;
+    }
+    match /pointTransactions/{id} { allow read: if request.auth != null && resource.data.uid == request.auth.uid; allow write: if false; }
+    match /walletTransactions/{id} { allow read: if request.auth != null && resource.data.uid == request.auth.uid; allow write: if false; }
+    match /studySessions/{id} { allow read, write: if false; }
+    match /payments/{id} { allow read, write: if false; }
+    match /referrals/{id} { allow read: if request.auth != null && resource.data.referrerUid == request.auth.uid; allow write: if false; }
+    match /withdrawals/{id} { allow read: if request.auth != null && resource.data.uid == request.auth.uid; allow write: if false; }
+    match /quizResults/{id} { allow read, write: if false; }
+    match /onlineExamResults/{id} { allow read, write: if false; }
+    match /examSessions/{id} { allow read, write: if false; }
+    match /subjectBankStatus/{id} { allow read, write: if false; }
+    match /examParticipants/{id} { allow read: if request.auth != null && resource.data.uid == request.auth.uid; allow write: if false; }
+    match /exams/{id} { allow read: if request.auth != null; allow write: if false; }
+    match /quiz_access_codes/{id} { allow read, write: if false; }
+  }
+}
